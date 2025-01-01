@@ -1,19 +1,20 @@
 type Pizza = {
+  id: number,
   name: string,
   price: number
 };
 
 type Order = {
   id: number,
-  pizza: Pizza
-  status: string
+  pizza: Pizza,
+  status: 'ordered' | 'completed'
 }
 
-const menu = [
-  { name: "Margherita", price: 8 },
-  { name: "Pepperoni", price: 10 },
-  { name: "Hawaiian", price: 10 },
-  { name: "Veggie", price: 9 },
+const menu: Pizza[] = [
+  { id: 1, name: 'Margherita', price: 8 },
+  { id: 2, name: 'Pepperoni', price: 10 },
+  { id: 3, name: 'Hawaiian', price: 10 },
+  { id: 4, name: 'Veggie', price: 9 },
 ];
 
 let cashInRegister = 100;
@@ -30,7 +31,7 @@ function placeOrder(pizzaName: string) {
 
   if (selectedPizza) {
 
-    const newOrder = { id: nextOrderId++, pizza: selectedPizza, status: "ordered" };
+    const newOrder: Order = { id: nextOrderId++, pizza: selectedPizza, status: 'ordered' };
     orderQueue.push(newOrder);
     cashInRegister += selectedPizza.price;
     return orderQueue;
@@ -49,15 +50,18 @@ function completeOrder(orderId: number) {
     order.status = 'completed';
     return order;
   }
+  else {
+    return console.error(`Order id: ${orderId} not found in queue.`);
+  }
 
 }
 
-addNewPizza({ name: 'Chicken Bacon Ranch', price: 12 });
-addNewPizza({ name: 'BBBQ Chicken', price: 12 });
-addNewPizza({ name: 'Spicy Sausage Bacon Ranch', price: 11 });
-addNewPizza({ name: 'Meat Lovers', price: 150 });
+addNewPizza({ id: 5, name: 'BBBQ Chicken', price: 12 });
+addNewPizza({ id: 6, name: 'Spicy Sausage Bacon Ranch', price: 11 });
+addNewPizza({ id: 7, name: 'Meat Lovers', price: 150 });
+addNewPizza({ id: 8, name: 'Chicken Bacon Ranch', price: 12 });
 
-placeOrder("Chicken Bacon Ranch");
+placeOrder('Chicken Bacon Ranch');
 placeOrder('Meat Lovers');
 placeOrder('Margherita');
 placeOrder('Spicy Sausage Bacon Ranch');
