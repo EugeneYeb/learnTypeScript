@@ -1,3 +1,3 @@
-type UserRole = "guest" | "member" | "admin"
+export type UserRole = "guest" | "member" | "admin"
 
 let userRole: UserRole = 'admin';

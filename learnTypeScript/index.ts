@@ -1,16 +1,16 @@
-type Pizza = {
+export type Pizza = {
   id: number,
   name: string,
   price: number
 };
 
-type Order = {
+export type Order = {
   id: number,
   pizza: Pizza,
   status: 'ordered' | 'completed'
 }
 
-const menu: Pizza[] = [
+export const menu: Pizza[] = [
   { id: 1, name: 'Margherita', price: 8 },
   { id: 2, name: 'Pepperoni', price: 10 },
   { id: 3, name: 'Hawaiian', price: 10 },
@@ -72,3 +72,4 @@ completeOrder(4);
 console.log('Menu:', menu);
 console.log('cash in register:', cashInRegister);
 console.log('Order queue:', orderQueue);
+
