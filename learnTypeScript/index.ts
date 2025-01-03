@@ -1,5 +1,5 @@
 export type Pizza = {
-  id: number,
+  id: number | undefined,
   name: string,
   price: number
 };
@@ -10,31 +10,39 @@ export type Order = {
   status: 'ordered' | 'completed'
 }
 
-export const menu: Pizza[] = [
-  { id: 1, name: 'Margherita', price: 8 },
-  { id: 2, name: 'Pepperoni', price: 10 },
-  { id: 3, name: 'Hawaiian', price: 10 },
-  { id: 4, name: 'Veggie', price: 9 },
-];
-
+//Global variable declarations
 let cashInRegister = 100;
 let nextOrderId = 1;
+let nextPizzaId: number = 1;
 const orderQueue: Order[] = [];
 
-function addNewPizza(pizzaObject: Pizza) {
+export const menu: Pizza[] = [
+  { id: nextPizzaId++, name: 'Margherita', price: 8 },
+  { id: nextPizzaId++, name: 'Pepperoni', price: 10 },
+  { id: nextPizzaId++, name: 'Hawaiian', price: 10 },
+  { id: nextPizzaId++, name: 'Veggie', price: 9 },
+];
+
+function addNewPizza(pizzaObject: Pizza): void {
+  pizzaObject.id = nextPizzaId++;
   menu.push(pizzaObject);
 }
 
-function placeOrder(pizzaName: string) {
+addNewPizza({ id: undefined, name: 'BBBQ Chicken', price: 12 });
+addNewPizza({ id: undefined, name: 'Spicy Sausage Bacon Ranch', price: 11 });
+addNewPizza({ id: undefined, name: 'Meat Lovers', price: 150 });
+addNewPizza({ id: undefined, name: 'Chicken Bacon Ranch', price: 12 });
 
-  const selectedPizza = menu.find((pizzaObject: Pizza) => pizzaObject.name === pizzaName);
+function placeOrder(pizzaName: string): Order | void {
+
+  const selectedPizza: Pizza | undefined = menu.find((pizzaObject: Pizza) => pizzaObject.name === pizzaName);
 
   if (selectedPizza) {
 
     const newOrder: Order = { id: nextOrderId++, pizza: selectedPizza, status: 'ordered' };
     orderQueue.push(newOrder);
     cashInRegister += selectedPizza.price;
-    return orderQueue;
+    return newOrder;
 
   }
   else {
@@ -42,9 +50,9 @@ function placeOrder(pizzaName: string) {
   }
 }
 
-function completeOrder(orderId: number) {
+function completeOrder(orderId: number): Order | void {
 
-  const order = orderQueue.find((order) => order.id === orderId);
+  const order: Order | undefined = orderQueue.find((order) => order.id === orderId);
 
   if (order) {
     order.status = 'completed';
@@ -56,10 +64,6 @@ function completeOrder(orderId: number) {
 
 }
 
-addNewPizza({ id: 5, name: 'BBBQ Chicken', price: 12 });
-addNewPizza({ id: 6, name: 'Spicy Sausage Bacon Ranch', price: 11 });
-addNewPizza({ id: 7, name: 'Meat Lovers', price: 150 });
-addNewPizza({ id: 8, name: 'Chicken Bacon Ranch', price: 12 });
 
 placeOrder('Chicken Bacon Ranch');
 placeOrder('Meat Lovers');
@@ -70,6 +74,5 @@ completeOrder(3);
 completeOrder(4);
 
 console.log('Menu:', menu);
-console.log('cash in register:', cashInRegister);
-console.log('Order queue:', orderQueue);
-
+// console.log('cash in register:', cashInRegister);
+// console.log('Order queue:', orderQueue);

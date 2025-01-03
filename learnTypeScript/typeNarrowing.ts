@@ -1,6 +1,6 @@
 import { Pizza, menu, Order } from "./index";
 
-export function getPizzaDetail(identifier: string | number) { //you can specify the possible parameter types
+export function getPizzaDetail(identifier: string | number): Pizza | undefined { //you can specify the possible parameter types
 
   if (typeof identifier === 'string') {
     return menu.find((pizza: Pizza) => pizza.name.toLowerCase() === identifier.toLowerCase());
