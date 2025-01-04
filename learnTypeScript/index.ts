@@ -4,6 +4,8 @@ export type Pizza = {
   price: number
 };
 
+type CreatePizza = Partial<Pizza>;
+
 export type Order = {
   id: number,
   pizza: Pizza,
