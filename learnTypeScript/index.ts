@@ -1,5 +1,5 @@
 export type Pizza = {
-  id: number | undefined,
+  id: number,
   name: string,
   price: number
 };
@@ -25,15 +25,19 @@ export const menu: Pizza[] = [
   { id: nextPizzaId++, name: 'Veggie', price: 9 },
 ];
 
-function addNewPizza(pizzaObject: Pizza): void {
-  pizzaObject.id = nextPizzaId++;
-  menu.push(pizzaObject);
+function addNewPizza(pizzaObject: Omit<Pizza, 'id'>): Pizza {
+  const newPizza: Pizza = {
+    id: nextPizzaId++,
+    ...pizzaObject
+  }
+  menu.push(newPizza);
+  return newPizza;
 }
 
-addNewPizza({ id: undefined, name: 'BBBQ Chicken', price: 12 });
-addNewPizza({ id: undefined, name: 'Spicy Sausage Bacon Ranch', price: 11 });
-addNewPizza({ id: undefined, name: 'Meat Lovers', price: 150 });
-addNewPizza({ id: undefined, name: 'Chicken Bacon Ranch', price: 12 });
+addNewPizza({ name: 'BBBQ Chicken', price: 12 });
+addNewPizza({ name: 'Spicy Sausage Bacon Ranch', price: 11 });
+addNewPizza({ name: 'Meat Lovers', price: 150 });
+addNewPizza({ name: 'Chicken Bacon Ranch', price: 12 });
 
 function placeOrder(pizzaName: string): Order | void {
 
