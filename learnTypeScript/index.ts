@@ -82,3 +82,17 @@ completeOrder(4);
 console.log('Menu:', menu);
 // console.log('cash in register:', cashInRegister);
 // console.log('Order queue:', orderQueue);
+
+function addToArray<T>(array: T[], item: T): T[] {
+  array.push(item);
+  return array;
+}
+// function addToArray(array: Pizza[], item: Pizza) {
+//   array.push(item);
+//   return array;
+// }
+
+addToArray<Pizza>(menu, { id: nextPizzaId++, name: 'Im hungry Pizza', price: 15 });
+addToArray<Order>(orderQueue, { id: nextPizzaId++, pizza: menu[2], status: 'completed' });
+// console.log(menu);
+// console.log(orderQueue);
